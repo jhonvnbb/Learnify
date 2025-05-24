@@ -1,28 +1,25 @@
-import Navbar from "./Navbar";
-import Hero from "./Hero";
-import About from "./About";
-import Packages from "./Packages";
-import Testimonials from "./Testimonials";
-import Contact from "./Contact";
-import Footer from "./Footer";
+import '../css/app.css';
+import './bootstrap';
 
-import ReactDOM from "react-dom/client";
+import { createInertiaApp } from '@inertiajs/react';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createRoot } from 'react-dom/client';
 
-const App = () => {
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-    return (
-        <div className="font-sans scroll-smooth bg-white text-gray-800">
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) =>
+        resolvePageComponent(
+            `./Pages/${name}.jsx`,
+            import.meta.glob('./Pages/**/*.jsx'),
+        ),
+    setup({ el, App, props }) {
+        const root = createRoot(el);
 
-            <Navbar />
-            <Hero />
-            <About />
-            <Packages />
-            <Testimonials />
-            <Contact />
-            <Footer />
-
-        </div>
-    );
-};
-
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+        root.render(<App {...props} />);
+    },
+    progress: {
+        color: '#4B5563',
+    },
+});
