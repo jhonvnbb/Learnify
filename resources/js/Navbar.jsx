@@ -56,7 +56,7 @@ export default function Navbar() {
                                 Kontak
                             </a>
                             <a
-                                href="#login"
+                                href={route('login')}
                                 className="ml-4 inline-block bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-white px-5 py-2 rounded-full font-semibold text-sm shadow-xl transition-all duration-300 hover:scale-105"
                             >
                                 Masuk
@@ -136,7 +136,7 @@ export default function Navbar() {
                             Kontak
                         </a>
                         <a
-                            href="#login"
+                            href={route('login')}
                             className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white py-2 rounded-full text-center font-semibold hover:from-cyan-300 hover:to-blue-400 transition"
                         >
                             Masuk
