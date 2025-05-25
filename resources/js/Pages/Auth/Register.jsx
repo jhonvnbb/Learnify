@@ -45,7 +45,7 @@ export default function Register() {
                         <img
                             src="/images/register.svg"
                             alt="Ilustrasi Register"
-                            className="w-full max-w-sm mx-auto mt-6"
+                            className="w-2/3 max-w-sm mx-auto mt-6"
                         />
                     </div>
                 </motion.div>

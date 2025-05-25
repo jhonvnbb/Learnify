@@ -7,17 +7,17 @@ const contactItems = [
     {
         icon: faEnvelope,
         color: "from-teal-400 to-cyan-500",
-        text: "support@learnify.id",
+        text: "tinonababan3@gmailcom",
     },
     {
-        icon: faPhone,
+        icon: faPhone,  
         color: "from-blue-400 to-indigo-500",
-        text: "+62 812-3456-7890",
+        text: "0896-3345-1402",
     },
     {
         icon: faWhatsapp,
         color: "from-green-400 to-emerald-500",
-        text: "+62 857-1234-5678",
+        text: "0895-3460-53848",
     },
 ];
 
