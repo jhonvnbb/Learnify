@@ -37,12 +37,12 @@ export default function Navbar() {
                             >
                                 Tentang
                             </a>
-                            {/* <a
-                                href="#packages"
+                            <a
+                                href="#features"
                                 className="hover:text-cyan-300 transition"
                             >
-                                Paket
-                            </a> */}
+                                Fitur
+                            </a>
                             <a
                                 href="#testimonials"
                                 className="hover:text-cyan-300 transition"
@@ -117,12 +117,6 @@ export default function Navbar() {
                         >
                             Fitur
                         </a>
-                        {/* <a
-                            href="#packages"
-                            className="hover:text-cyan-300 transition"
-                        >
-                            Paket
-                        </a> */}
                         <a
                             href="#testimonials"
                             className="hover:text-cyan-300 transition"

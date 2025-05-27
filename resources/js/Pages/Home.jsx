@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from '../Navbar';
 import Hero from '../Hero';
 import About from '../About';
-// import Packages from '../Packages';
+import Features from '../Features';
 import Testimonials from '../Testimonials';
 import Contact from '../Contact';
 import Footer from '../Footer';
@@ -13,7 +13,7 @@ export default function Home() {
             <Navbar />
             <Hero />
             <About />
-            {/* <Packages /> */}
+            <Features />
             <Testimonials />
             <Contact />
             <Footer />
