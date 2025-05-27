@@ -7,7 +7,7 @@ import {
     faClock,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function InteractivePackages() {
+export default function Features() {
     const features = [
         {
             icon: faChalkboardTeacher,
@@ -30,7 +30,7 @@ export default function InteractivePackages() {
         {
             title: "Basic",
             desc: "Paket dasar dengan akses penuh ke fitur interaktif dan penilaian mingguan.",
-            price: "Rp50.000 / bulan",
+            price: "Gratis",
             includedFeatures: [
                 "Materi Interaktif",
                 "Kuis & Penilaian",
@@ -41,7 +41,7 @@ export default function InteractivePackages() {
         {
             title: "Premium",
             desc: "Lengkap dengan live class, konsultasi langsung, dan sertifikat resmi.",
-            price: "Rp100.000 / bulan",
+            price: "Rp.250.000,00 ",
             includedFeatures: [
                 "Materi Interaktif",
                 "Kuis & Penilaian",
@@ -57,7 +57,7 @@ export default function InteractivePackages() {
     return (
         <main
             className="min-h-screen relative pt-36 pb-28 px-6 md:px-10 bg-[#0f172a] overflow-hidden text-white"
-            id="packages"
+            id="features"
         >
             {/* Decorative gradients */}
             <div className="absolute -top-40 -left-40 w-[40rem] h-[40rem] bg-blue-600 opacity-20 blur-[140px] rounded-full pointer-events-none"></div>
@@ -190,9 +190,7 @@ export default function InteractivePackages() {
                                         <p className="text-2xl font-bold mb-3">
                                             {pkg.price}
                                         </p>
-                                        <button className="w-full py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-500 font-semibold text-sm md:text-base hover:opacity-90 transition-shadow shadow-md">
-                                            Pilih Paket
-                                        </button>
+                                
                                     </motion.div>
                                 )}
                             </AnimatePresence>

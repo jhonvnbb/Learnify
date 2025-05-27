@@ -55,10 +55,10 @@ export default function Hero() {
                     <strong className="text-white"> mentor terbaik</strong>.
                 </p>
                 <a
-                    href="#packages"
+                    href={route("register")}
                     className="inline-block bg-gradient-to-r from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 text-white mt-4 px-8 py-3 rounded-full font-semibold text-lg shadow-xl transition-all duration-300 hover:scale-105 ring-2 ring-white/20 backdrop-blur-md"
                 >
-                    Jelajahi Paket Belajar
+                    Daftar Sekarang
                 </a>
             </div>
 

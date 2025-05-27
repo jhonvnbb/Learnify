@@ -35,14 +35,14 @@ export default function Footer() {
                                 Tentang
                             </a>
                         </li>
-                        {/* <li>
+                        <li>
                             <a
-                                href="#packages"
+                                href="#features"
                                 className="hover:text-white transition duration-300"
                             >
-                                Paket
+                                Fitur
                             </a>
-                        </li> */}
+                        </li>
                         <li>
                             <a
                                 href="#testimonials"

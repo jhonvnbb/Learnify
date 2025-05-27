@@ -38,7 +38,7 @@ export default function Dashboard() {
                             )}
 
                             <Link
-                                href="/courses"
+                                href={ route('courses.index') }
                                 className="inline-block bg-cyan-500 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-cyan-600 transition"
                             >
                                 Lihat Kursus 📚
