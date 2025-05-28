@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Head } from '@inertiajs/react';
-import { Menu, X, Home, Users, LogOut } from 'lucide-react';
+import { Menu, X, Home, Users,BookOpen, LogOut } from 'lucide-react';
 
 export default function AdminLayout({ children, title = 'Admin' }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -31,6 +31,12 @@ export default function AdminLayout({ children, title = 'Admin' }) {
             className="flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 hover:bg-teal-600 transition text-slate-100"
           >
             <Users size={20} /> Users
+          </Link>
+          <Link
+            href="/admin/courses"
+            className="flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 hover:bg-teal-600 transition text-slate-100"
+          >
+            <BookOpen size={20} /> Courses
           </Link>
         </nav>
 

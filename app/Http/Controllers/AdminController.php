@@ -25,4 +25,17 @@ class AdminController extends Controller
         ]);
     }
 
+    public function users()
+    {
+        $users = User::where('role', 0)->get();
+        return Inertia::render('Admin/Users', [
+            'users' => $users,
+        ]);
+    }
+
+    public function courses()
+    {
+        return Inertia::render('Admin/Courses');
+    }
+
 }

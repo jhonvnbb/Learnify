@@ -34,6 +34,8 @@ Route::middleware('auth', 'verified')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/courses', [AdminController::class, 'courses'])->name('admin.courses');
 });
 
 require __DIR__.'/auth.php';
