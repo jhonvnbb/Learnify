@@ -33,9 +33,4 @@ class AdminController extends Controller
         ]);
     }
 
-    public function courses()
-    {
-        return Inertia::render('Admin/Courses');
-    }
-
 }

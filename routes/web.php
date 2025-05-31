@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminCourseController;
+use App\Http\Controllers\SubTopicController;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,7 +38,19 @@ Route::middleware('auth', 'verified')->group(function () {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
-    Route::get('/courses', [AdminController::class, 'courses'])->name('admin.courses');
+
+    Route::get('/courses', [AdminCourseController::class, 'index'])->name('admin.courses.index');
+    Route::post('/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
+    Route::post('/subtopics', [SubTopicController::class, 'store'])->name('subtopics.store');
+
+    // Course
+    Route::put('/courses/{course}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
+    Route::delete('/courses/{course}', [AdminCourseController::class, 'destroy'])->name('admin.courses.destroy');
+
+    // SubTopic
+    Route::put('/subtopics/{subtopic}', [SubTopicController::class, 'update'])->name('subtopics.update');
+    Route::delete('/subtopics/{subtopic}', [SubTopicController::class, 'destroy'])->name('subtopics.destroy');
+
 });
 
 require __DIR__.'/auth.php';
