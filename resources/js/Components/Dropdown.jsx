@@ -1,11 +1,26 @@
 import { Transition } from '@headlessui/react';
 import { Link } from '@inertiajs/react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useRef, useEffect } from 'react';
 
 const DropDownContext = createContext();
 
 const Dropdown = ({ children }) => {
     const [open, setOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const toggleOpen = () => {
         setOpen((prev) => !prev);
@@ -13,27 +28,24 @@ const Dropdown = ({ children }) => {
 
     return (
         <DropDownContext.Provider value={{ open, setOpen, toggleOpen }}>
-            <div className="relative">{children}</div>
+            <div className="relative" ref={dropdownRef}>
+                {children}
+            </div>
         </DropDownContext.Provider>
     );
 };
 
 const Trigger = ({ children }) => {
-    const { open, setOpen, toggleOpen } = useContext(DropDownContext);
+    const { open, toggleOpen } = useContext(DropDownContext);
 
     return (
-        <>
-            <div onClick={toggleOpen} className="cursor-pointer">
-                {children}
-            </div>
-
-            {open && (
-                <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setOpen(false)}
-                ></div>
-            )}
-        </>
+        <div 
+            onClick={toggleOpen} 
+            className="cursor-pointer"
+            aria-expanded={open}
+        >
+            {children}
+        </div>
     );
 };
 
@@ -65,13 +77,16 @@ const Content = ({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
         >
+            {/* Increased z-index to 9999 and added isolation */}
             <div
-                className={`absolute z-50 mt-2 rounded-xl shadow-xl ${alignmentClasses} ${widthClasses}`}
+                className={`absolute z-[9999] mt-2 rounded-xl shadow-xl ${alignmentClasses} ${widthClasses}`}
                 onClick={() => setOpen(false)}
+                style={{ isolation: 'isolate' }} // Creates new stacking context
             >
                 <div
                     className={`
-                        rounded-xl bg-[#1e293b]/95 backdrop-blur-md text-white ring-1 ring-cyan-500/20
+                        rounded-xl bg-[#1e293b]/95 backdrop-blur-md text-white 
+                        ring-1 ring-cyan-500/20 border border-slate-700/50
                         ${contentClasses}
                     `}
                 >
@@ -87,9 +102,9 @@ const DropdownLink = ({ className = '', children, ...props }) => {
         <Link
             {...props}
             className={`
-                block w-full px-4 py-2 text-left text-sm font-medium text-slate-200 
-                hover:bg-cyan-600/20 hover:text-cyan-400 transition-all duration-200 ease-in-out 
-                focus:outline-none focus:bg-cyan-600/30 rounded-md
+                block w-full px-4 py-2.5 text-left text-sm font-medium text-slate-200 
+                hover:bg-slate-700/50 hover:text-cyan-400 transition-colors duration-150
+                focus:outline-none focus:bg-slate-700/70 focus:text-cyan-400
                 ${className}
             `}
         >

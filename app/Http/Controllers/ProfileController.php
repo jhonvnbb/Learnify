@@ -21,6 +21,8 @@ class ProfileController extends Controller
         return Inertia::render('Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
+            'memberSince' => Auth::user()->email_verified_at,
+            'packageType' => Auth::user()->package_type,
         ]);
     }
 

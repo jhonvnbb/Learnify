@@ -70,7 +70,7 @@ export default function Features() {
                 viewport={{ once: true }}
                 className="text-3xl md:text-5xl font-extrabold text-center mb-14 tracking-tight"
             >
-                Pilih Gaya Belajarmu Bareng <span className="text-blue-400"> Learnify!</span>
+                Fitur <span className="text-blue-400"> Learnify!</span>
             </motion.h2>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
