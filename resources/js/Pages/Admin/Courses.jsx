@@ -95,18 +95,6 @@ export default function Courses({ courses }) {
                         onClick={() => setShowCourseForm(!showCourseForm)}
                         className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-6 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
                     >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
                         {showCourseForm ? "Close Form" : "New Course"}
                     </button>
                 </div>
@@ -405,7 +393,7 @@ export default function Courses({ courses }) {
                                                     clipRule="evenodd"
                                                 />
                                             </svg>
-                                            Add Subtopic
+                                            Subtopic
                                         </button>
                                     </div>
                                 </div>

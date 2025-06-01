@@ -30,6 +30,7 @@
         "@tsparticles/basic": "^3.8.1",
         "@tsparticles/engine": "^3.8.1",
         "@tsparticles/react": "^3.0.0",
+        "dayjs": "^1.11.13",
         "framer-motion": "^12.12.1",
         "lucide-react": "^0.511.0",
         "react": "^19.1.0",

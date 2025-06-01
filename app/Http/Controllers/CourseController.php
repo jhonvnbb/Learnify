@@ -3,28 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Course;
+
 
 class CourseController extends Controller
 {
      public function index()
     {
-        // Dummy data topik pembelajaran
-        $courses = [
-            ['title' => 'Pengenalan Pemrograman', 'description' => 'Dasar-dasar algoritma dan logika pemrograman'],
-            ['title' => 'HTML & CSS', 'description' => 'Dasar membuat tampilan web yang menarik'],
-            ['title' => 'JavaScript Dasar', 'description' => 'Interaktivitas web dengan JS'],
-            ['title' => 'Database MySQL', 'description' => 'Mengelola data dengan SQL'],
-            ['title' => 'PHP Dasar', 'description' => 'Belajar backend menggunakan PHP'],
-            ['title' => 'Laravel Beginner', 'description' => 'Framework PHP modern dan praktis'],
-            ['title' => 'ReactJS Dasar', 'description' => 'Membuat UI dinamis dengan React'],
-            ['title' => 'Git & Github', 'description' => 'Versi kontrol dan kolaborasi kode'],
-            ['title' => 'UX/UI Design', 'description' => 'Dasar desain antarmuka pengguna'],
-            ['title' => 'Membangun API RESTful', 'description' => 'Backend yang bisa digunakan semua platform'],
-        ];
+        // $user = auth()->user();
+        $user = Auth::user();
+        $courses = Course::with('subTopics')->get();
 
-        return Inertia::render('Courses/Index', [
+        return Inertia::render('User/Courses', [
             'courses' => $courses,
+            'userPackageType' => $user->package_type,
         ]);
     }
+
+public function show($id)
+{
+    $course = Course::with('subTopics')->findOrFail($id);
+
+    return Inertia::render('User/CourseDetail', [
+        'course' => $course,
+    ]);
+}
+
 }

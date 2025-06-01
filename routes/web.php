@@ -33,6 +33,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
@@ -43,7 +44,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
     Route::post('/subtopics', [SubTopicController::class, 'store'])->name('subtopics.store');
 
-    // Course
+    // Course    
     Route::put('/courses/{course}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
     Route::delete('/courses/{course}', [AdminCourseController::class, 'destroy'])->name('admin.courses.destroy');
 
