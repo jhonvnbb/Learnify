@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { SparklesCore } from "./SparklesCore";
-import { FaLightbulb, FaRocket, FaUserGraduate } from "react-icons/fa";
+import { FaLightbulb, FaRocket, FaUserGraduate, FaArrowRight } from "react-icons/fa";
+import { FiCheckCircle } from "react-icons/fi";
 
 export default function Hero() {
     return (
@@ -9,80 +10,121 @@ export default function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative min-h-screen flex flex-col items-center justify-center bg-[#0f172a] text-white px-6 overflow-hidden pt-32"
+            className="relative min-h-screen flex flex-col items-center justify-center bg-[#0f172a] text-white px-6 overflow-hidden pt-32 pb-32"
         >
-            {/* Overlay Blur */}
-            <div className="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm z-0"></div>
+            {/* Cosmic Background */}
+            <div className="absolute inset-0 overflow-hidden">
+                {/* Animated Gradient Mesh */}
+                <div className="absolute inset-0 opacity-30">
+                    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-[100px] animate-float-slow"></div>
+                    <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-indigo-500 rounded-full mix-blend-multiply filter blur-[90px] animate-float-medium"></div>
+                    <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-sky-500 rounded-full mix-blend-multiply filter blur-[80px] animate-float-fast"></div>
+                </div>
 
-            {/* Floating Gradient Circles */}
-            <div className="absolute -top-32 left-10 w-72 h-72 bg-emerald-400 opacity-20 blur-[120px] rounded-full animate-pulse-slow"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-sky-500 opacity-30 blur-[150px] rounded-full animate-pulse-slow"></div>
-
-            {/* Decorative SVG Background Pattern */}
-            <svg
-                className="absolute top-0 left-0 w-full h-full opacity-5"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-                viewBox="0 0 100 100"
-            >
-                <defs>
-                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
+                {/* Subtle Grid Pattern */}
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20"></div>
+            </div>
 
             {/* Sparkle Effect */}
-            <SparklesCore className="absolute inset-0 z-0" />
+            <div className="absolute inset-0 overflow-hidden">
+                <SparklesCore
+                    id="hero-sparkles"
+                    background="transparent"
+                    minSize={0.6}
+                    maxSize={1.4}
+                    particleDensity={50}
+                    className="w-full h-full"
+                    particleColor="#FFFFFF"
+                />
+            </div>
 
-            {/* Main Content */}
-            <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-                <h2 className="text-5xl md:text-6xl font-extrabold mb-12 leading-tight tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-sky-300 to-cyan-200">
-                        Belajar Lebih Cerdas dan Menyenangkan
-                    </span>
-                </h2>
-                <p className="text-lg md:text-2xl font-light mb-8 text-slate-300">
-                    Bersama{" "}
-                    <span className="text-teal-300 font-semibold underline decoration">
-                        Learnify
-                    </span>
-                    , kamu bisa mengakses{" "}
-                    <strong className="text-white">materi premium</strong>,
-                    <strong className="text-white"> kuis interaktif</strong>,
-                    dan
-                    <strong className="text-white"> mentor terbaik</strong>.
-                </p>
-                <a
-                    href={route("register")}
-                    className="inline-block bg-gradient-to-r from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 text-white mt-4 px-8 py-3 rounded-full font-semibold text-lg shadow-xl transition-all duration-300 hover:scale-105 ring-2 ring-white/20 backdrop-blur-md"
+            {/* Content Container */}
+            <div className="relative z-10 text-center max-w-6xl mx-auto px-4">
+                {/* Animated Title */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                    className="mb-12"
                 >
-                    Daftar Sekarang
-                </a>
+                    <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tighter">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-sky-300 to-cyan-200 animate-text-shimmer">
+                            Transformasi Belajar
+                        </span>
+                        <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-sky-300 to-teal-300 animate-text-shimmer delay-200">
+                            Masa Depan
+                        </span>
+                    </h1>
+                    <p className="text-xl md:text-2xl font-light text-slate-300 max-w-3xl mx-auto">
+                        Bergabung dengan <span className="text-teal-300 font-medium">Learnify</span> dan rasakan pengalaman belajar premium dengan metode terkini dan mentor profesional.
+                    </p>
+                </motion.div>
+
+                {/* CTA Button with Hover Effect */}
+                <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-block"
+                >
+                    <a
+                        href={route("register")}
+                        className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-bold text-white rounded-full shadow-2xl"
+                    >
+                        <span className="absolute inset-0 bg-gradient-to-r from-teal-400 to-sky-500 opacity-90 group-hover:from-teal-300 group-hover:to-sky-400 transition-all duration-300"></span>
+                        <span className="absolute top-0 left-0 w-full h-full bg-white opacity-10 group-hover:opacity-0 transition-all duration-300"></span>
+                        <span className="absolute top-0 left-0 w-0 h-full bg-white opacity-10 group-hover:w-full transition-all duration-500"></span>
+                        <span className="relative flex items-center">
+                            Mulai Sekarang <FaArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                    </a>
+                </motion.div>
+
             </div>
 
-            {/* Feature Highlights */}
-            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 px-4 text-center max-w-5xl">
-                <div className="flex flex-col items-center text-slate-200">
-                    <FaLightbulb className="text-teal-300 text-3xl mb-2" />
-                    <h4 className="font-semibold text-lg">Pembelajaran Inovatif</h4>
-                    <p className="text-sm text-slate-400">Metode interaktif dan modern.</p>
-                </div>
-                <div className="flex flex-col items-center text-slate-200">
-                    <FaRocket className="text-teal-300 text-3xl mb-2" />
-                    <h4 className="font-semibold text-lg">Akses Cepat</h4>
-                    <p className="text-sm text-slate-400">Tanpa batasan waktu dan tempat.</p>
-                </div>
-                <div className="flex flex-col items-center text-slate-200">
-                    <FaUserGraduate className="text-teal-300 text-3xl mb-2" />
-                    <h4 className="font-semibold text-lg">Mentor Profesional</h4>
-                    <p className="text-sm text-slate-400">Langsung dari ahlinya.</p>
-                </div>
-            </div>
+            {/* Feature Cards */}
+            <motion.div 
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+                className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 px-4 max-w-6xl w-full"
+            >
+                {[
+                    {
+                        icon: <FaLightbulb className="text-4xl mb-4" />,
+                        title: "Pembelajaran Inovatif",
+                        description: "Metode interaktif berbasis teknologi terkini",
+                        color: "text-teal-300"
+                    },
+                    {
+                        icon: <FaRocket className="text-4xl mb-4" />,
+                        title: "Akses Fleksibel",
+                        description: "Belajar kapan saja, di mana saja",
+                        color: "text-sky-300"
+                    },
+                    {
+                        icon: <FaUserGraduate className="text-4xl mb-4" />,
+                        title: "Mentor Profesional",
+                        description: "Dibimbing langsung oleh ahli di bidangnya",
+                        color: "text-cyan-300"
+                    }
+                ].map((feature, index) => (
+                    <motion.div
+                        key={index}
+                        whileHover={{ y: -10 }}
+                        className="bg-gradient-to-b from-slate-800/50 to-slate-900/50 backdrop-blur-lg p-8 rounded-2xl border border-slate-700/50 shadow-lg hover:shadow-xl transition-all"
+                    >
+                        <div className={`${feature.color} mb-4`}>
+                            {feature.icon}
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                        <p className="text-slate-400">{feature.description}</p>
+                    </motion.div>
+                ))}
+            </motion.div>
 
-            {/* Bottom Glow */}
-            <div className="absolute -bottom-24 left-1/2 transform -translate-x-1/2 w-[450px] h-[450px] bg-cyan-300 opacity-20 rounded-full blur-[120px] animate-pulse-slow z-0"></div>
+            {/* Floating Particles */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0f172a] to-transparent z-20"></div>
         </motion.section>
     );
 }
