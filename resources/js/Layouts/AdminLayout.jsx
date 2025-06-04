@@ -39,7 +39,7 @@ export default function AdminLayout({ children, title = 'Admin' }) {
             <BookOpen size={20} /> Courses
           </Link>
           <Link
-            href="/admin/quiz"
+            href="/admin/quizzes"
             className="flex items-center gap-3 px-4 py-2 rounded-lg bg-white/5 hover:bg-teal-600 transition text-slate-100"
           >
             <ClipboardList size={20} /> Quiz

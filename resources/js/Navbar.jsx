@@ -32,6 +32,12 @@ export default function Navbar() {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex space-x-8 items-center text-white text-sm font-medium">
                             <a
+                                href="#hero"
+                                className="hover:text-cyan-300 transition"
+                            >
+                                Beranda
+                            </a>
+                            <a
                                 href="#about"
                                 className="hover:text-cyan-300 transition"
                             >
@@ -105,6 +111,12 @@ export default function Navbar() {
                     }`}
                 >
                     <div className="flex flex-col px-6 py-4 space-y-4 text-white font-medium text-base">
+                        <a
+                            href="#hero"
+                            className="hover:text-cyan-300 transition"
+                        >
+                            Beranda
+                        </a>
                         <a
                             href="#about"
                             className="hover:text-cyan-300 transition"

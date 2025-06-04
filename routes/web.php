@@ -5,6 +5,8 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\SubTopicController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -34,23 +36,35 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
-});
+}); 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
 
-    Route::get('/courses', [AdminCourseController::class, 'index'])->name('admin.courses.index');
-    Route::post('/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
-    Route::post('/subtopics', [SubTopicController::class, 'store'])->name('subtopics.store');
-
     // Course    
     Route::put('/courses/{course}', [AdminCourseController::class, 'update'])->name('admin.courses.update');
     Route::delete('/courses/{course}', [AdminCourseController::class, 'destroy'])->name('admin.courses.destroy');
-
+    Route::get('/courses', [AdminCourseController::class, 'index'])->name('admin.courses.index');
+    Route::post('/courses', [AdminCourseController::class, 'store'])->name('admin.courses.store');
+    
     // SubTopic
     Route::put('/subtopics/{subtopic}', [SubTopicController::class, 'update'])->name('subtopics.update');
     Route::delete('/subtopics/{subtopic}', [SubTopicController::class, 'destroy'])->name('subtopics.destroy');
+    Route::post('/subtopics', [SubTopicController::class, 'store'])->name('subtopics.store');
+
+    Route::get('/quizzes/{quiz}/questions', [QuestionController::class, 'index'])->name('questions.index');
+    Route::post('/quizzes/{quiz}/questions', [QuestionController::class, 'store'])->name('questions.store');
+    Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+    
+
+    Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes.index');
+    Route::post('/quizzes', [QuizController::class, 'store'])->name('quizzes.store');
+    Route::put('/quizzes/{quiz}', [QuizController::class, 'update'])->name('quizzes.update');
+    Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy'])->name('quizzes.destroy');
+
+
 
 });
 

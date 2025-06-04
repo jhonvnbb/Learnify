@@ -8,7 +8,6 @@ export default function Dashboard({
   total_basic = 0,
   total_premium = 0,
   recent_verified = [],
-  system_summary = {},
 }) {
   const today = new Date().toLocaleDateString('id-ID', {
     weekday: 'long',
