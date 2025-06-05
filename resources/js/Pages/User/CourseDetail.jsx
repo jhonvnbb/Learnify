@@ -1,11 +1,14 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiBook, FiClock, FiAward, FiDownload, FiPlay, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import axios from 'axios';
 
 export default function CourseDetail({ course }) {
   const [activeSubTopicId, setActiveSubTopicId] = useState(course.sub_topics[0]?.id || null);
   const [transitionDirection, setTransitionDirection] = useState('right');
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [quizData, setQuizData] = useState(null);
 
   const activeSubTopic = course.sub_topics.find(sub => sub.id === activeSubTopicId) || null;
   const currentIndex = course.sub_topics.findIndex(sub => sub.id === activeSubTopicId);
@@ -15,6 +18,7 @@ export default function CourseDetail({ course }) {
   const navigateToSubTopic = (id, direction = 'right') => {
     setTransitionDirection(direction);
     setActiveSubTopicId(id);
+    setShowQuiz(false); // Reset quiz view
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -31,6 +35,17 @@ export default function CourseDetail({ course }) {
       navigateToSubTopic(nextId, 'right');
     }
   };
+
+  const loadQuiz = async () => {
+  try {
+    const response = await axios.get(`/courses/${course.id}/quiz`);
+    setQuizData(response.data);
+    setShowQuiz(true);
+  } catch (error) {
+    console.error('Gagal mengambil data kuis:', error);
+  }
+};
+
 
   return (
     <AuthenticatedLayout
@@ -62,7 +77,7 @@ export default function CourseDetail({ course }) {
                       <button
                         onClick={() => navigateToSubTopic(sub.id)}
                         className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-200 ${
-                          activeSubTopicId === sub.id 
+                          activeSubTopicId === sub.id && !showQuiz
                             ? 'bg-cyan-600/30 text-cyan-400 border-l-4 border-cyan-400 shadow-md'
                             : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
                         }`}
@@ -79,6 +94,18 @@ export default function CourseDetail({ course }) {
                 </ul>
               </div>
 
+              {/* Quiz Button */}
+              <div className="bg-gradient-to-b from-cyan-900/30 to-slate-800/30 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50 shadow-lg mt-4">
+                <button
+                  onClick={loadQuiz}
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-all duration-200 ${
+                    showQuiz ? 'bg-cyan-600/30 text-cyan-400 border-l-4 border-cyan-400 shadow-md' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white'
+                  }`}
+                >
+                  Kuis
+                </button>
+              </div>
+
               {/* Course Info */}
               <div className="mt-4 bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 border border-slate-700/50">
                 <div className="flex items-center text-sm text-slate-300 mb-2">
@@ -91,122 +118,110 @@ export default function CourseDetail({ course }) {
                 </div>
               </div>
 
-                {/* Progress Indicator */}
-                <div className="mt-6 bg-slate-800/50 rounded-full h-2">
-                  <div 
-                    className="bg-cyan-500 h-2 rounded-full" 
-                    style={{ 
-                      width: `${((currentIndex + 1) / course.sub_topics.length) * 100}%` 
-                    }}
-                  />
-                </div>
+              {/* Progress Indicator */}
+              <div className="mt-6 bg-slate-800/50 rounded-full h-2">
+                <div 
+                  className="bg-cyan-500 h-2 rounded-full" 
+                  style={{ 
+                    width: `${((currentIndex + 1) / course.sub_topics.length) * 100}%` 
+                  }}
+                />
+              </div>
             </div>
           </aside>
 
-          {/* Main Content - Single Subtopic View */}
+          {/* Main Content */}
           <div className="lg:w-3/4">
-            {activeSubTopic ? (
-              <div className="relative">
-                {/* Navigation Arrows */}
-                <div className="flex justify-between mb-4">
-                  <button
-                    onClick={navigatePrevious}
-                    disabled={!hasPrevious}
-                    className={`flex items-center px-4 py-2 rounded-lg ${hasPrevious ? 'text-cyan-400 hover:bg-slate-800/50' : 'text-slate-600 cursor-not-allowed'}`}
-                  >
-                    <FiChevronLeft className="mr-1" />
-                    Previous
-                  </button>
-                  <button
-                    onClick={navigateNext}
-                    disabled={!hasNext}
-                    className={`flex items-center px-4 py-2 rounded-lg ${hasNext ? 'text-cyan-400 hover:bg-slate-800/50' : 'text-slate-600 cursor-not-allowed'}`}
-                  >
-                    Next
-                    <FiChevronRight className="ml-1" />
-                  </button>
-                </div>
+            {showQuiz ? (
+              quizData ? (
+                <div className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-lg">
+                  <h3 className="text-xl font-semibold text-cyan-400 mb-4">
+  {quizData?.title || 'Kuis'} - {course.title}
+</h3>
 
-                {/* Current Subtopic */}
-                <div 
-                  key={activeSubTopic.id}
-                  className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700/50 shadow-lg"
-                >
-                  <div className="flex items-start mb-6">
-                    <div className="flex items-center justify-center bg-cyan-500/20 text-cyan-400 rounded-lg w-10 h-10 text-lg font-bold mr-4">
-                      {currentIndex + 1}
-                    </div>
-                    <h4 className="text-2xl font-bold text-white mt-1">
-                      {activeSubTopic.title}
-                    </h4>
-                  </div>
-
-                  <div
-                    className="prose prose-invert max-w-none mb-6"
-                    dangerouslySetInnerHTML={{ __html: activeSubTopic.content }}
-                  />
-
-                  {/* Resources Section */}
-                  {(activeSubTopic.pdf_path || activeSubTopic.video_path) && (
-                    <div className="mt-8 pt-6 border-t border-slate-700/50">
-                      <h5 className="text-lg font-semibold text-cyan-400 mb-4">
-                        Learning Resources
-                      </h5>
-                      
-                      <div className="grid gap-6">
-                        {/* PDF Viewer */}
-                        {activeSubTopic.pdf_path && (
-                          <div className="bg-slate-900/50 rounded-xl overflow-hidden border border-slate-700/50">
-                            <div className="bg-slate-800/50 px-4 py-3 flex items-center">
-                              <FiDownload className="text-red-400 mr-2" />
-                              <span className="font-medium">PDF Document</span>
-                              <a 
-                                href={`/storage/${activeSubTopic.pdf_path}`} 
-                                download
-                                className="ml-auto text-sm text-cyan-400 hover:text-cyan-300 flex items-center"
-                              >
-                                Download
-                              </a>
-                            </div>
-                            <iframe
-                              src={`/storage/${activeSubTopic.pdf_path}#view=fitH`}
-                              className="w-full h-96"
-                              title={`PDF ${activeSubTopic.title}`}
-                            />
-                          </div>
-                        )}
-
-                        {/* Video Viewer */}
-                        {activeSubTopic.video_path && (
-                          <div className="bg-slate-900/50 rounded-xl overflow-hidden border border-slate-700/50">
-                            <div className="bg-slate-800/50 px-4 py-3 flex items-center">
-                              <FiPlay className="text-purple-400 mr-2" />
-                              <span className="font-medium">Video Lesson</span>
-                            </div>
-                            <video
-                              controls
-                              className="w-full bg-black"
-                              src={`/storage/${activeSubTopic.video_path}`}
-                              poster={activeSubTopic.video_thumbnail || '/default-video-thumbnail.jpg'}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                  {quizData.questions.length > 0 ? (
+                    <ul className="space-y-4">
+                      {quizData.questions.map((q, idx) => (
+                        <li key={q.id} className="bg-slate-900 p-4 rounded-md border border-slate-700">
+                          <p className="mb-2 font-medium text-white">{idx + 1}. {q.question_text}</p>
+                          <ul className="list-disc list-inside text-slate-400">
+                            {JSON.parse(q.options).map((opt, i) => (
+                              <li key={i}>{String.fromCharCode(65 + i)}. {opt}</li>
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-slate-400">Tidak ada soal dalam kuis ini.</p>
                   )}
                 </div>
-
-              </div>
+              ) : (
+                <p className="text-slate-400">Kuis tidak ditemukan untuk modul ini.</p>
+              )
             ) : (
-              <div className="text-center py-12">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-800/50 rounded-full mb-4">
-                  <svg className="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+              // Original SubTopic content tetap di sini
+              activeSubTopic && (
+                <div className="relative">
+                  {/* Navigation Arrows */}
+                  <div className="flex justify-between mb-4">
+                    <button
+                      onClick={navigatePrevious}
+                      disabled={!hasPrevious}
+                      className={`flex items-center px-4 py-2 rounded-lg ${hasPrevious ? 'text-cyan-400 hover:bg-slate-800/50' : 'text-slate-600 cursor-not-allowed'}`}
+                    >
+                      <FiChevronLeft className="mr-1" />
+                      Previous
+                    </button>
+                    <button
+                      onClick={navigateNext}
+                      disabled={!hasNext}
+                      className={`flex items-center px-4 py-2 rounded-lg ${hasNext ? 'text-cyan-400 hover:bg-slate-800/50' : 'text-slate-600 cursor-not-allowed'}`}
+                    >
+                      Next
+                      <FiChevronRight className="ml-1" />
+                    </button>
+                  </div>
+
+                  {/* SubTopic Content */}
+                  <div key={activeSubTopic.id} className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700/50 shadow-lg">
+                    <div className="flex items-start mb-6">
+                      <div className="flex items-center justify-center bg-cyan-500/20 text-cyan-400 rounded-lg w-10 h-10 text-lg font-bold mr-4">
+                        {currentIndex + 1}
+                      </div>
+                      <h4 className="text-2xl font-bold text-white mt-1">{activeSubTopic.title}</h4>
+                    </div>
+                    <div className="prose prose-invert max-w-none mb-6" dangerouslySetInnerHTML={{ __html: activeSubTopic.content }} />
+                    {/* Resource viewer tetap sama */}
+                    {(activeSubTopic.pdf_path || activeSubTopic.video_path) && (
+                      <div className="mt-8 pt-6 border-t border-slate-700/50">
+                        <h5 className="text-lg font-semibold text-cyan-400 mb-4">Learning Resources</h5>
+                        <div className="grid gap-6">
+                          {activeSubTopic.pdf_path && (
+                            <div className="bg-slate-900/50 rounded-xl overflow-hidden border border-slate-700/50">
+                              <div className="bg-slate-800/50 px-4 py-3 flex items-center">
+                                <FiDownload className="text-red-400 mr-2" />
+                                <span className="font-medium">PDF Document</span>
+                                <a href={`/storage/${activeSubTopic.pdf_path}`} download className="ml-auto text-sm text-cyan-400 hover:text-cyan-300 flex items-center">Download</a>
+                              </div>
+                              <iframe src={`/storage/${activeSubTopic.pdf_path}#view=fitH`} className="w-full h-96" title={`PDF ${activeSubTopic.title}`} />
+                            </div>
+                          )}
+                          {activeSubTopic.video_path && (
+                            <div className="bg-slate-900/50 rounded-xl overflow-hidden border border-slate-700/50">
+                              <div className="bg-slate-800/50 px-4 py-3 flex items-center">
+                                <FiPlay className="text-purple-400 mr-2" />
+                                <span className="font-medium">Video Lesson</span>
+                              </div>
+                              <video controls className="w-full bg-black" src={`/storage/${activeSubTopic.video_path}`} poster={activeSubTopic.video_thumbnail || '/default-video-thumbnail.jpg'} />
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <h4 className="text-xl font-medium text-slate-400 mb-2">No Modules Available</h4>
-                <p className="text-slate-500 max-w-md mx-auto">This course doesn't have any modules yet.</p>
-              </div>
+              )
             )}
           </div>
         </div>

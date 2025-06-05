@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Course;
+use App\Models\Quiz;
 
 
 class CourseController extends Controller
@@ -30,5 +31,16 @@ public function show($id)
         'course' => $course,
     ]);
 }
+
+// Di dalam controller Laravel kamu
+public function quiz($id)
+{
+    $quiz = Quiz::with('questions')
+        ->where('course_id', $id)
+        ->first();
+
+    return response()->json($quiz);
+}
+
 
 }
