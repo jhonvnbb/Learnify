@@ -19,34 +19,37 @@ class QuestionController extends Controller
     }
 
     public function store(Request $request, $quizId)
-{
-    $validated = $request->validate([
-        'question_text' => 'required|string',
-        'options' => 'required|array|size:4',
-        'correct_answer' => 'required|in:A,B,C,D',
-    ]);
+    {
+        $validated = $request->validate([
+            'question_text' => 'required|string',
+            'options' => 'required|array|size:4',
+            'correct_answer' => 'required|in:A,B,C,D',
+        ]);
 
-    Question::create([
-        'quiz_id' => $quizId,
-        'question_text' => $validated['question_text'],
-        'options' => json_encode($validated['options']),
-        'correct_answer' => $validated['correct_answer'],
-    ]);
+        Question::create([
+            'quiz_id' => $quizId,
+            'question_text' => $validated['question_text'],
+            'options' => json_encode($validated['options']),
+            'correct_answer' => $validated['correct_answer'],
+        ]);
 
-    return redirect()->back()->with('success', 'Soal berhasil ditambahkan!');
-}
-
+        return redirect()->back()->with('success', 'Soal berhasil ditambahkan!');
+    }
 
     public function update(Request $request, Question $question)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'question_text' => 'required|string',
             'options' => 'required|array|size:4',
             'options.*' => 'required|string',
             'correct_answer' => 'required|in:A,B,C,D',
         ]);
 
-        $question->update($data);
+        $question->update([
+            'question_text' => $validated['question_text'],
+            'options' => json_encode($validated['options']),
+            'correct_answer' => $validated['correct_answer'],
+        ]);
 
         return redirect()->back()->with('success', 'Soal berhasil diperbarui!');
     }
