@@ -97,7 +97,7 @@ export default function Users({ users }) {
                     <td className="px-6 py-4">{user.name}</td>
                     <td className="px-6 py-4">{user.email}</td>
                     <td className="px-6 py-4 capitalize">
-                      {user.package === 'premium' ? (
+                      {user.package_type === 'premium' ? (
                         <span className="text-amber-600 font-semibold">Premium</span>
                       ) : (
                         <span className="text-indigo-600">Basic</span>

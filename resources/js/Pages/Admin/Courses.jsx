@@ -4,6 +4,7 @@ import AdminLayout from "@/Layouts/AdminLayout";
 import ReactQuill from "react-quill";
 import { Inertia } from "@inertiajs/inertia";
 import "react-quill/dist/quill.snow.css";
+import { ConfirmModal } from '@/Components/ConfirmModal';
 
 export default function Courses({ courses }) {
     const [showCourseForm, setShowCourseForm] = useState(false);
@@ -11,6 +12,11 @@ export default function Courses({ courses }) {
     const [expandedCourse, setExpandedCourse] = useState(null);
     const [editingCourse, setEditingCourse] = useState(null);
     const [editingSubTopic, setEditingSubTopic] = useState(null);
+
+    const [showModal, setShowModal] = useState(false);
+    const [selectedCourseId, setSelectedCourseId] = useState(null);
+    const [showSubtopicModal, setShowSubtopicModal] = useState(false);
+    const [selectedSubtopicId, setSelectedSubtopicId] = useState(null);
 
     const courseForm = useForm({
         title: "",
@@ -65,15 +71,29 @@ export default function Courses({ courses }) {
         setExpandedCourse(expandedCourse === courseId ? null : courseId);
     };
 
-    const handleDeleteCourse = (id) => {
-        if (confirm("Apakah Anda yakin ingin menghapus course ini?")) {
-            Inertia.delete(route("admin.courses.destroy", id));
+    const openDeleteModal = (id) => {
+        setSelectedCourseId(id);
+        setShowModal(true);
+    };
+
+    const handleConfirmDelete = () => {
+        if (selectedCourseId) {
+        Inertia.delete(route("admin.courses.destroy", selectedCourseId));
+        setShowModal(false);
+        setSelectedCourseId(null);
         }
     };
 
-    const handleDeleteSubTopic = (id) => {
-        if (confirm("Hapus subtopik ini?")) {
-            Inertia.delete(route("subtopics.destroy", id));
+    const openDeleteSubtopicModal = (id) => {
+        setSelectedSubtopicId(id);
+        setShowSubtopicModal(true);
+    };
+
+    const handleConfirmDeleteSubtopic = () => {
+        if (selectedSubtopicId) {
+        Inertia.delete(route("subtopics.destroy", selectedSubtopicId));
+        setShowSubtopicModal(false);
+        setSelectedSubtopicId(null);
         }
     };
 
@@ -327,9 +347,7 @@ export default function Courses({ courses }) {
                                         </button>
 
                                         <button
-                                            onClick={() =>
-                                                handleDeleteCourse(course.id)
-                                            }
+                                            onClick={() => openDeleteModal(course.id)}
                                             className="p-2 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full"
                                         >
                                             <svg
@@ -1064,11 +1082,7 @@ export default function Courses({ courses }) {
                                                                     </h4>
                                                                     <div className="flex gap-2">
                                                                         <button
-                                                                            onClick={() =>
-                                                                                handleDeleteSubTopic(
-                                                                                    sub.id
-                                                                                )
-                                                                            }
+                                                                            onClick={() => openDeleteSubtopicModal(sub.id)}
                                                                             className="p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded"
                                                                         >
                                                                             <svg
@@ -1203,6 +1217,27 @@ export default function Courses({ courses }) {
                     </div>
                 )}
             </div>
+                <ConfirmModal
+                    show={showModal}
+                    onClose={() => setShowModal(false)}
+                    onConfirm={handleConfirmDelete}
+                    title="Konfirmasi Hapus Course"
+                    confirmText="Hapus"
+                    confirmColor="danger"
+                >
+                    <p className="text-slate-300">Apakah Anda yakin ingin menghapus course ini? Tindakan ini tidak bisa dibatalkan.</p>
+                </ConfirmModal>
+
+                <ConfirmModal
+                    show={showSubtopicModal}
+                    onClose={() => setShowSubtopicModal(false)}
+                    onConfirm={handleConfirmDeleteSubtopic}
+                    title="Hapus Subtopik"
+                    confirmText="Hapus"
+                    confirmColor="danger"
+                >
+                    <p className="text-slate-300">Apakah Anda yakin ingin menghapus subtopik ini?</p>
+                </ConfirmModal>
         </AdminLayout>
     );
 }

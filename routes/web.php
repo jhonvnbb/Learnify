@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\SubTopicController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
-use App\Models\Course;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,19 +56,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/subtopics/{subtopic}', [SubTopicController::class, 'destroy'])->name('subtopics.destroy');
     Route::post('/subtopics', [SubTopicController::class, 'store'])->name('subtopics.store');
 
-
+    // Quiz Questions
     Route::get('/quizzes/{quiz}/questions', [QuestionController::class, 'index'])->name('questions.index');
     Route::post('/quizzes/{quiz}/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::put('/questions/{question}', [QuestionController::class, 'update'])->name('questions.update');
     Route::delete('/questions/{question}', [QuestionController::class, 'destroy'])->name('questions.destroy');
 
-
+    // Quiz
     Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes.index');
     Route::post('/quizzes', [QuizController::class, 'store'])->name('quizzes.store');
     Route::put('/quizzes/{quiz}', [QuizController::class, 'update'])->name('quizzes.update');
     Route::delete('/quizzes/{quiz}', [QuizController::class, 'destroy'])->name('quizzes.destroy');
-
-
 
 });
 
