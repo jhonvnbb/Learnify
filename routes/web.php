@@ -37,6 +37,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
     Route::get('/courses/{id}/quiz', [CourseController::class, 'quiz'])->name('courses.quiz');
+    Route::post('/quizzes/{quiz}/submit', [CourseController::class, 'submit'])->name('courses.submit');
 
 }); 
 
