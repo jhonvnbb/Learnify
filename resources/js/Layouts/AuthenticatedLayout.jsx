@@ -15,42 +15,38 @@ export default function AuthenticatedLayout({ header, children }) {
         <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1a233a] to-[#0f172a] text-white">
             {/* Top Navigation Bar */}
             <nav className="bg-slate-900/80 backdrop-blur-lg border-b border-slate-700/50 shadow-xl relative z-40">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16 items-center">
-                        {/* Left Logo + Navigation */}
-                        <div className="flex items-center space-x-10">
-                            <Link
-                                href="/"
-                                className="flex items-center space-x-2 group"
-                            >
-                                <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-2 rounded-lg group-hover:rotate-12 transition-transform">
-                                    <FiBook className="h-5 w-5 text-white" />
-                                </div>
-                                <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 tracking-tight">
-                                    Learnify
-                                </span>
-                            </Link>
+    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+        <div className="flex justify-between h-20 items-center">
+            {/* Logo & Navigation */}
+            <div className="flex items-center space-x-12">
+                <Link href="/" className="flex items-center space-x-2 group">
+                    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 p-2 rounded-xl group-hover:rotate-12 transition-transform">
+                        <FiBook className="h-6 w-6 text-white" />
+                    </div>
+                    <span className="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400">
+                        Learnify
+                    </span>
+                </Link>
 
-                            {/* Desktop Navigation */}
-                            <div className="hidden md:flex space-x-1">
-                                <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
-                                    className="flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-slate-800/50 hover:text-cyan-400"
-                                >
-                                    <FiHome className="mr-2" />
-                                    Dashboard
-                                </NavLink>
-                                <NavLink
-                                    href={route("courses.index")}
-                                    active={route().current("courses.index")}
-                                    className="flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-slate-800/50 hover:text-cyan-400"
-                                >
-                                    <FiBook className="mr-2" />
-                                    Courses
-                                </NavLink>
-                            </div>
-                        </div>
+                <div className="hidden md:flex items-center space-x-3">
+                    <NavLink
+                        href={route("dashboard")}
+                        active={route().current("dashboard")}
+                        className="flex items-center px-4 py-2 rounded-xl text-sm font-medium transition hover:bg-slate-800/70 hover:text-cyan-400"
+                    >
+                        <FiHome className="mr-2" />
+                        Dashboard
+                    </NavLink>
+                    <NavLink
+                        href={route("courses.index")}
+                        active={route().current("courses.index")}
+                        className="flex items-center px-4 py-2 rounded-xl text-sm font-medium transition hover:bg-slate-800/70 hover:text-cyan-400"
+                    >
+                        <FiBook className="mr-2" />
+                        Courses
+                    </NavLink>
+                </div>
+            </div>
 
                         {/* Right Profile Section */}
                         <div className="hidden md:flex items-center space-x-6">
@@ -197,6 +193,19 @@ export default function AuthenticatedLayout({ header, children }) {
                     </div>
                 </div>
             </main>
+
+            <footer className="bg-slate-900/90 backdrop-blur-md border-t border-slate-800/50 mt-10">
+                <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm">
+                    <div className="mb-4 md:mb-0">
+                        © {new Date().getFullYear()} <span className="font-semibold text-cyan-400">Learnify</span>. All rights reserved.
+                    </div>
+                    <div className="space-x-6">
+                        <a href="#" className="hover:text-white transition">Privacy</a>
+                        <a href="#" className="hover:text-white transition">Terms</a>
+                        <a href="#" className="hover:text-white transition">Contact</a>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 }
