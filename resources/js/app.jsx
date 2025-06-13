@@ -5,7 +5,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Learnify';
+<meta name="csrf-token" content="{{ csrf_token() }}"></meta>
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

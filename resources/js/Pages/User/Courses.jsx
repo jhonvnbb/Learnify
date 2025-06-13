@@ -134,7 +134,7 @@ export default function Courses({ courses, userPackageType }) {
                           Upgrade your plan to access this content
                         </p>
                         <Link
-                          href="/upgrade"
+                          href={route('upgrade')}
                           className="inline-flex items-center justify-center bg-gradient-to-r from-yellow-500 to-amber-500 text-white px-4 py-2 rounded-lg font-medium text-sm shadow-lg hover:shadow-yellow-500/20 transition"
                         >
                           Upgrade Now

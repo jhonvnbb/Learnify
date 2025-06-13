@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\SubTopicController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\PaymentController;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +40,14 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/courses/{id}/quiz', [CourseController::class, 'quiz'])->name('courses.quiz');
     Route::post('/quizzes/{quiz}/submit', [CourseController::class, 'submit'])->name('courses.submit');
 
+    Route::get('/upgrade', [PaymentController::class, 'upgradePage'])->name('upgrade');
+    Route::post('/payment/create', [PaymentController::class, 'createTransaction'])->name('payment.create');
+    Route::post('/payment/callback', [PaymentController::class, 'handleCallback'])->name('payment.callback');
+    Route::post('/payment/webhook', [PaymentController::class, 'handleWebhook'])->name('payment.webhook');
+    Route::get('/payment/status/{orderId}', [PaymentController::class, 'checkPaymentStatus'])->name('payment.status');
 }); 
+
+Route::post('/payment/webhook', [PaymentController::class, 'handleWebhook']);
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

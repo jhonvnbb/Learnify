@@ -52,7 +52,7 @@ export default function Dashboard() {
                                 <div className="flex flex-col sm:flex-row gap-3">
                                     {user.package_type === 'basic' && (
                                         <Link
-                                            href="/upgrade"
+                                            href={route('upgrade')}
                                             className="inline-flex items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-cyan-500/20 transition-all hover:scale-[1.02]"
                                         >
                                             Upgrade to Premium <FiZap className="ml-2" />
